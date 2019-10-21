@@ -55,9 +55,9 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardHolder> {
       imageView = (ImageView) itemView;
     }
 
-    private void bind(Card card) {             //Static Factory method (uses a single instance)
+    private void bind(Card card) {                  //Static Factory method (uses a single instance)
       DeckOfCardsService service = DeckOfCardsService.getInstance();
-      imageView.setContentDescription(card.getRank().toString() + "of" + card.getSuit().toString());
+      imageView.setContentDescription(context.getString(R.string.card_content_description, card.getRank(), card.getSuit()));
       Picasso.get().load(service.getImageUrl(context, card).toString()).into(imageView);
     }
   }

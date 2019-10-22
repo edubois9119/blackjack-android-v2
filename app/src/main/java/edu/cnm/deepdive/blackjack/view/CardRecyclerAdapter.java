@@ -21,12 +21,10 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardHolder> {
   private final Context context;
   private final List<Card> cards;
 
-  public CardRecyclerAdapter(Context context,
-      List<Card> cards) {
+  public CardRecyclerAdapter(Context context, List<Card> cards) {
     this.context = context;
     this.cards = cards;
   }
-
 
   @NonNull
   @Override
@@ -49,43 +47,43 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardHolder> {
 
     private final ImageView imageView;
 
-
-    public CardHolder(@NonNull View itemView) {
+    private CardHolder(@NonNull View itemView) {
       super(itemView);
       imageView = (ImageView) itemView;
     }
 
-    private void bind(Card card) {                  //Static Factory method (uses a single instance)
-      DeckOfCardsService service = DeckOfCardsService.getInstance();
-      imageView.setContentDescription(context.getString(R.string.card_content_description, card.getRank(), card.getSuit()));
-      Picasso.get().load(service.getImageUrl(context, card).toString()).into(imageView);
+    private void bind(Card card) {
+      imageView.setContentDescription(
+          context.getString(R.string.card_content_description, card.getRank(), card.getSuit()));
+      Picasso.get().load(DeckOfCardsService.getImageUrl(card).toString()).into(imageView);
     }
-  }
 
+  }
 
   public static class OverlapDecoration extends RecyclerView.ItemDecoration {
 
     private final int verticalOffset;
-    private final int hortizontalOffset;
+    private final int horizontalOffset;
 
     public OverlapDecoration() {
-      this(0, 0);         //constructor chaining
+      this(0, 0);
     }
 
-    public OverlapDecoration(int verticalOffset, int hortizontalOffset) {
+    public OverlapDecoration(int verticalOffset, int horizontalOffset) {
       this.verticalOffset = verticalOffset;
-      this.hortizontalOffset = hortizontalOffset;
+      this.horizontalOffset = horizontalOffset;
     }
 
     @Override
     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
         @NonNull RecyclerView parent, @NonNull State state) {
-      final int itemPosition= parent.getChildAdapterPosition(view);
-      if(itemPosition==0) {
+      final int itemPosition = parent.getChildAdapterPosition(view);
+      if (itemPosition == 0) {
         super.getItemOffsets(outRect, view, parent, state);
       } else {
-        outRect.set(hortizontalOffset, verticalOffset, 0, 0);
+        outRect.set(horizontalOffset, verticalOffset, 0, 0);
       }
     }
   }
+
 }
